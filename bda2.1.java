@@ -85,7 +85,18 @@ public class MatrixMultiplication {
             context.write(key, new FloatWritable(sum));
         }
     }
-
+    gedit MatrixMultiplication.java
+export CLASSPATH="$(hadoop classpath)"
+javac -source 8 -target 8 MatrixMultiplication.java
+mkdir MM
+cp MatrixMultiplication*.class MM/
+jar -cvf MM.jar -C MM .
+gedit matrix.txt
+hdfs dfs -put matrix.txt /input2
+hadoop jar MM.jar MatrixMultiplication /input2 /output2
+hdfs dfs -ls /output2
+hdfs dfs -cat /output2/part-r-00000
+    
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "MatrixMultiplication2x2");
