@@ -1,0 +1,16 @@
+hadoop fs -mkdir /demo
+hadoop fs -mkdir /demo/bda
+echo "Big Data Analytics" > ex.txt
+hadoop fs -put ex.txt /demo/bda/
+hadoop fs -get /demo/bda/ex.txt ~/Downloads
+echo "Hadoop File Management" > new
+hadoop fs -put new /demo/bda/
+hadoop fs -ls /demo/bda
+hadoop fs -cat /demo/bda/new
+hadoop fs -cp /demo/bda/new /demo/
+hadoop fs -ls /demo
+hadoop fs -mv /demo/new /demo/bda/renamed.txt
+hadoop fs -ls /demo/bda
+hadoop fs -du -h /demo/bda
+hadoop fs -rm -r /demo/bda/ex.txt
+hadoop fs -ls /demo/bda
