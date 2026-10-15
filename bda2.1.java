@@ -85,7 +85,7 @@ public class MatrixMultiplication {
             context.write(key, new FloatWritable(sum));
         }
     }
-    gedit MatrixMultiplication.java
+gedit MatrixMultiplication.java
 export CLASSPATH="$(hadoop classpath)"
 javac -source 8 -target 8 MatrixMultiplication.java
 mkdir MM
