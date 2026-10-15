@@ -1,0 +1,74 @@
+use college
+
+db.users.insertMany([
+  { name: "Alice", age: 30, gender: "Female", city: "New York" },
+  { name: "Bob", age: 25, gender: "Male", city: "Los Angeles" },
+  { name: "Charlie", age: 35, gender: "Male", city: "Chicago" },
+  { name: "David", age: 28, gender: "Male", city: "San Francisco" },
+  { name: "Eve", age: 22, gender: "Female", city: "Boston" },
+  { name: "Frank", age: 40, gender: "Male", city: "Houston" },
+  { name: "Grace", age: 27, gender: "Female", city: "Miami" },
+  { name: "Hannah", age: 29, gender: "Female", city: "Seattle" },
+  { name: "Isaac", age: 31, gender: "Male", city: "Denver" },
+  { name: "Jack", age: 26, gender: "Male", city: "Dallas" }
+]);
+
+db.users.countDocuments({});
+
+db.users.countDocuments({ age: { $gt: 25 } });
+
+db.users.find().sort({ age: 1 });
+
+db.users.find().skip(9);
+
+db.users.aggregate([
+  { $match: { age: { $gt: 25 } } },
+  { $group: { _id: "$gender", count: { $sum: 1 } } },
+  { $sort: { count: -1 } },
+  { $limit: 5 }
+]);
+
+db.users.find({ city: "New York" });
+
+db.users.find({ gender: "Female" });
+
+db.users.find({ age: { $gte: 25, $lte: 30 } });
+
+db.users.find().sort({ age: -1 });
+
+db.users.find().limit(3);
+
+db.users.find().skip(2).limit(3);
+
+db.users.find({}, { _id: 0, name: 1, age: 1 });
+
+db.users.find().sort({ age: -1 }).limit(1);
+
+db.users.find().sort({ age: 1 }).limit(1);
+
+db.users.aggregate([
+  { $group: { _id: "$gender", count: { $sum: 1 } } }
+]);
+
+db.users.aggregate([
+  { $group: { _id: null, averageAge: { $avg: "$age" } } }
+]);
+
+db.users.aggregate([
+  { $group: {
+      _id: null,
+      maximumAge: { $max: "$age" },
+      minimumAge: { $min: "$age" }
+  } }
+]);
+
+db.users.aggregate([
+  { $group: { _id: null, totalAge: { $sum: "$age" } } }
+]);
+
+db.users.aggregate([
+  { $group: { _id: "$gender", averageAge: { $avg: "$age" } } },
+  { $sort: { averageAge: -1 } }
+]);
+
+db.users.find({ age: { $gt: 30 } }).sort({ age: 1 });
