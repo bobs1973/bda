@@ -36,6 +36,8 @@ public class MatrixMultiplication {
             }
         }
     }
+
+    
     public static class MatrixReducer
             extends Reducer<Text, Text, Text, Text> {
         public void reduce(Text key, Iterable<Text> values, Context context)
@@ -67,6 +69,19 @@ public class MatrixMultiplication {
             context.write(key, new Text(String.valueOf(sum)));
         }
     }
+
+    gedit MatrixMultiplication.java
+export CLASSPATH="$(hadoop classpath)"
+javac -source 8 -target 8 MatrixMultiplication.java
+mkdir MM
+cp MatrixMultiplication*.class MM/
+jar -cvf MM.jar -C MM .
+gedit matrix.txt
+hdfs dfs -put matrix.txt /input2
+hadoop jar MM.jar MatrixMultiplication /input2 /output2
+hdfs dfs -ls /output2
+hdfs dfs -cat /output2/part-r-00000
+
     public static void main(String[] args) throws Exception {
  Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "Matrix Multiplication");
